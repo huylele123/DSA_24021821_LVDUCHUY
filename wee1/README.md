@@ -1,4 +1,4 @@
-Câu 2 — Sắp xếp dãy tăng dần
+// Câu 2 — Sắp xếp dãy tăng dần
 void sapXepTang(int a[], int n) {
     for (int i = 0; i < n - 1; i++) {
         for (int j = i + 1; j < n; j++) {
@@ -11,7 +11,7 @@ void sapXepTang(int a[], int n) {
     }
 }
 
-Câu 4 — Rút gọn phân số a/b
+// Câu 4 — Rút gọn phân số a/b
 int UCLN(int a, int b) {
     if (a < 0) a = -a;
     if (b < 0) b = -b;
@@ -33,7 +33,7 @@ void rutGon(int &a, int &b) {
     }
 }
 
-Câu 6 — a) Xóa phần tử ở vị trí k
+// Câu 6 — a) Xóa phần tử ở vị trí k
 void xoaPhanTu(int a[], int &n, int k) {
     if (k < 0 || k >= n) {
         cout << "Vi tri khong hop le!\n";
@@ -45,7 +45,7 @@ void xoaPhanTu(int a[], int &n, int k) {
     n--;
 }
 
-b) Chèn phần tử x vào vị trí m
+// b) Chèn phần tử x vào vị trí m
 void chenPhanTu(int a[], int &n, int m, int x) {
     if (m < 0 || m > n) {
         cout << "Vi tri khong hop le!\n";
