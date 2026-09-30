@@ -22,6 +22,7 @@ Node* createNode(int x) {
     p->next = NULL;
     return p;
 }
+
 // 1. Truy cap phan tu tai vi tri i
 Node* truyCap(List l, int i) {
     Node* p = l.head;
@@ -33,6 +34,7 @@ Node* truyCap(List l, int i) {
     return p;
 }
 // Độ phức tạp 0(n)
+
 // 2. Chen phan tu vao dau
 void chenDau(List &l, int x) {
     Node* p = createNode(x);
@@ -45,6 +47,7 @@ void chenDau(List &l, int x) {
     }
 }
 // Độ phức tạp 0(1)
+
 // 3. Chen phan tu vao cuoi
 void chenCuoi(List &l, int x) {
     Node* p = createNode(x);
@@ -67,6 +70,7 @@ int soLuong(List l) {
     return count;
 }
 // Độ phức tạp 0(1)
+
 // 4. Chen vao vi tri i
 // Quy uoc vi tri bat dau tu 0
 void chenViTri(List &l, int x, int i) {
@@ -92,6 +96,7 @@ void chenViTri(List &l, int x, int i) {
     q->prev = p;
 }
 // Độ phức tạp 0(n)
+
 // 5. Xoa phan tu dau
 void xoaDau(List &l) {
     if (l.head == NULL)
@@ -106,6 +111,7 @@ void xoaDau(List &l) {
     delete p;
 }
 //Độ phức tạp 0(1)
+
 // 6. Xoa phan tu cuoi
 void xoaCuoi(List &l) {
     if (l.tail == NULL)
@@ -120,6 +126,7 @@ void xoaCuoi(List &l) {
     delete p;
 }
 //Độ phức tạp 0(1)
+
 // 7. Xoa phan tu tai vi tri i
 void xoaViTri(List &l, int i) {
     if (i < 0 || l.head == NULL)
@@ -140,6 +147,7 @@ void xoaViTri(List &l, int i) {
     delete p;
 }
 //Độ phức tạp 0(n)
+
 // 8. Duyet xuoi
 void duyetXuoi(List l) {
     Node* p = l.head;
@@ -150,6 +158,7 @@ void duyetXuoi(List l) {
     cout << endl;
 }
 //Độ phức tạp 0(n)
+
 // 9. Duyet nguoc
 void duyetNguoc(List l) {
     Node* p = l.tail;
@@ -160,6 +169,7 @@ void duyetNguoc(List l) {
     cout << endl;
 }
 //Độ phức tạp 0(n)
+
 // Giai phong bo nho
 void giaiPhong(List &l) {
     while (l.head != NULL) {
