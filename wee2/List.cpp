@@ -7,7 +7,6 @@ int n = 0;
 void layPhanTu(int vitri) {
     cout << arr[vitri] << endl;
 }
-
 void chenCuoi(int x) {
     arr[n] = x;
     n++;
