@@ -1,163 +1,175 @@
+
 #include <iostream>
 using namespace std;
+
 struct Node {
     int data;
     Node* next;
 };
-struct List {
-    Node* head;
-    Node* tail;
-};
-// Khoi tao danh sach
-void init(List &l) {
-    l.head = NULL;
-    l.tail = NULL;
-}
-// Tao node moi
-Node* createNode(int x) {
+
+Node* taoNut(int x)
+{
     Node* p = new Node;
     p->data = x;
-    p->next = NULL;
+    p->next = nullptr;
     return p;
 }
 
-// 1. Truy cap phan tu tai vi tri i
-Node* truyCap(List l, int i) {
-    if (i < 0)
-        return NULL;
-    Node* p = l.head;
-    for (int j = 0; p != NULL && j < i; j++) {
-        p = p->next;
-    }
-    return p;
+void chenDau(Node *&head, int x)
+{
+    Node* p = taoNut(x);
+    p->next = head;
+    head = p;
 }
-// Độ phức tạp của thuật toán là 0(n)
 
-// 2. Chen dau
-void chenDau(List &l, int x) {
-    Node* p = createNode(x);
-    if (l.head == NULL) {
-        l.head = l.tail = p;
+void chenCuoi(Node *&head, int x)
+{
+    Node* p = taoNut(x);
+    if (head == nullptr)
+    {
+        head = p;
+        return;
     }
-    else {
-        p->next = l.head;
-        l.head = p;
+
+    Node* cur = head;
+    while (cur->next != nullptr)
+    {
+        cur = cur->next;
     }
+    cur->next = p;
 }
-// Độ phức tạp của thuật toán là 0(1)
 
-// 3. Chen cuoi
-void chenCuoi(List &l, int x) {
-    Node* p = createNode(x);
-    if (l.head == NULL) {
-        l.head = l.tail = p;
+void chenViTri(Node *&head, int x, int k)
+{
+    if (k < 0 || head == nullptr)
+    {
+        chenDau(head, x);
+        return;
     }
-    else {
-        l.tail->next = p;
-        l.tail = p;
+
+    Node *cur = head;
+    for (int i = 0; i < k - 1 && cur->next != nullptr; i++)
+    {
+        cur = cur->next;
     }
+
+    Node *p = taoNut(x);
+    p->next = cur->next;
+    cur->next = p;
 }
-// Độ phức tạp của thuật toán là 0(1)
 
-// 4. Chen vao vi tri i
-// Vi tri bat dau tu 0
-void chenViTri(List &l, int x, int i) {
-    if (i < 0)
-        return;
-    if (i == 0) {
-        chenDau(l, x);
-        return;
-    }
-    Node* prev = truyCap(l, i - 1);
-    if (prev == NULL)
-        return;
-    if (prev == l.tail) {
-        chenCuoi(l, x);
-        return;
-    }
-    Node* p = createNode(x);
-    p->next = prev->next;
-    prev->next = p;
+void xoaDau(Node *&head)
+{
+    if (head == nullptr) return;
+
+    Node *cur = head;
+    head = head->next;
+    delete cur;
 }
-// Độ phức tạp của thuật toán là 0(n)
 
-// 5. Xoa dau
-void xoaDau(List &l) {
-    if (l.head == NULL)
+void xoaCuoi(Node *&head)
+{
+    if (head == nullptr) return;
+
+    if (head->next == nullptr)
+    {
+        delete head;
+        head = nullptr;
         return;
-    Node* p = l.head;
-    l.head = l.head->next;
-    if (l.head == NULL)
-        l.tail = NULL;
-    delete p;
+    }
+
+    Node *cur = head;
+    while (cur->next->next != nullptr)
+        cur = cur->next;
+
+    delete cur->next;
+    cur->next = nullptr;
 }
-// Độ phức tạp của thuật toán là 0(1)
 
-// 6. Xoa cuoi
-void xoaCuoi(List &l) {
-    if (l.head == NULL)
-        return;
-    if (l.head == l.tail) {
-        delete l.head;
-        l.head = l.tail = NULL;
+void xoaViTri(Node *&head, int k)
+{
+    if (k < 0 || head == nullptr) return;
+
+    if (k == 0)
+    {
+        xoaDau(head);
         return;
     }
-    Node* p = l.head;
-    while (p->next != l.tail) {
-        p = p->next;
+
+    Node *cur = head;
+    for (int i = 0; i < k - 1 && cur->next != nullptr; i++)
+    {
+        cur = cur->next;
     }
-    delete l.tail;
-    l.tail = p;
-    l.tail->next = NULL;
+
+    if (cur->next == nullptr) return;
+
+    Node *temp = cur->next;
+    cur->next = temp->next;
+    delete temp;
 }
-// Độ phức tạp của thuật toán là 0(n)
 
-// 7. Xoa phan tu tai vi tri i
-void xoaViTri(List &l, int i) {
-    if (i < 0 || l.head == NULL)
-        return;
-    if (i == 0) {
-        xoaDau(l);
-        return;
+int timViTri(Node* head, int x)
+{
+    int index = 0;
+    while (head != nullptr)
+    {
+        if (head->data == x)
+            return index;
+
+        head = head->next;
+        index++;
     }
-    Node* prev = truyCap(l, i - 1);
-    if (prev == NULL || prev->next == NULL)
-        return;
-    Node* p = prev->next;
-    if (p == l.tail) {
-        l.tail = prev;
-        prev->next = NULL;
-    }
-    else {
-        prev->next = p->next;
-    }
-    delete p;
+    return -1;
 }
-// Độ phức tạp của thuật toán là 0(n)
 
-// 8. Duyet xuoi
-void duyetXuoi(List l) {
-    Node* p = l.head;
-    while (p != NULL) {
-        cout << p->data << " ";
-        p = p->next;
+void inDanhSach(Node* head)
+{
+    while (head != nullptr)
+    {
+        cout << head->data << " ";
+        head = head->next;
     }
     cout << endl;
 }
-// Độ phức tạp của thuật toán là 0(n)
 
-// 9. Duyet nguoc
-void duyetNguoc(Node* p) {
-    if (p == NULL)
-        return;
-    duyetNguoc(p->next);
-    cout << p->data << " ";
+void inNguoc(Node* head)
+{
+    if (head == nullptr) return;
+
+    inNguoc(head->next);
+    cout << head->data << " ";
 }
-// Độ phức tạp của thuật toán là 0(n)
 
-// Giai phong bo nho
-void giaiPhong(List &l) {
-    while (l.head != NULL) {
-        xoaDau(l);
-    }
+int main()
+{
+    Node* head = nullptr;
+
+    cout << "Tao chuoi node" << endl;
+    chenDau(head, 10);
+    chenCuoi(head, 20);
+    chenCuoi(head, 30);
+    chenCuoi(head, 40);
+    inDanhSach(head);
+
+    cout << "Chen vao vi tri thu 2" << endl;
+    chenViTri(head, 15, 1);
+    inDanhSach(head);
+
+    cout << "Xoa vi tri dau" << endl;
+    xoaDau(head);
+    inDanhSach(head);
+
+    cout << "Xoa vi tri cuoi:" << endl;
+    xoaCuoi(head);
+    inDanhSach(head);
+
+    cout << "Xoa vi tri thu 2" << endl;
+    xoaViTri(head, 1);
+    inDanhSach(head);
+
+    cout << "Duyet nguoc:" << endl;
+    inNguoc(head);
+
+    return 0;
 }
